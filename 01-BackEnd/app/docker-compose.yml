@@ -1,0 +1,58 @@
+version: '3.4'
+
+services:
+  ernesto.sanchez.orderservice:
+    image: ${DOCKER_REGISTRY-}ernestosanchezorderservice
+    container_name: orderservice
+    build:
+      context: .
+      dockerfile: Backend/Domain/Order/Ernesto.Sanchez.OrderService/Dockerfile
+    ports:
+      - 8082:8080
+      - 8083:8081
+    networks:
+      - backend
+  ernesto.sanchez.securityservice:
+    image: ${DOCKER_REGISTRY-}ernestosanchezsecurityservice
+    container_name: securityservice
+    build:
+      context: .
+      dockerfile: Backend/Infrastructure/Security/Ernesto.Sanchez.SecurityService/Dockerfile
+    ports:
+      - 8084:80
+      - 8085:443
+    networks:
+      - backend
+  sqlserver:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password1234
+    ports:
+      - 1434:1433
+    networks:
+     - backend
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.2
+    container_name: keycloak
+    restart: on-failure
+    command: ["start-dev"]
+    ports:
+      - 8081:8080
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=Password1234
+      - KC_DB=mssql
+      - KC_DB_URL=jdbc:sqlserver://sqlserver:1433;databaseName=keycloak;encrypt=false
+      - KC_DB_USERNAME=sa
+      - KC_DB_PASSWORD=Password1234
+      - KC_TRANSACTION_XA_ENABLED=false
+    volumes:
+      - ./idp/data:/opt/keycloak/data
+    networks:
+      - backend
+networks:
+  backend:
+    name: backend
+    driver: bridge

@@ -1,0 +1,81 @@
+Keycloak Configuration
+======================
+1.- Create Database "Keycloak"
+2.- Login with "admin" - "Password1234"
+3.- Create Realm
+	- Realm name: "fullstack"
+4.- Create Client
+	//- Client ID: "library.service"
+	- Client ID: "orderservice"
+	- Client authentication: on
+	- Authorization: on
+	- Valid redirect URIs: http://localhost:8082/*
+5.- Create User
+	- Username: erick
+	- Email: erick@todo.local
+	- Email verified: on
+	- First name: Erick
+	- Last name: Aróstegui Cunza
+
+6.- Set password to user
+	- Go to user "erick"
+	- Go to credential
+	- Set password
+	- Password: password
+	- Temporary: off
+7.- Map Audience
+	- Go to Client "library.service"
+	- Go to Client scopes "library.service-dedicated"
+	- Add mapper "By Configuration"
+	- Mapper type: Audience
+	- Name: Audience
+	- Included Client Audience: library.service
+	- Add to access token: on
+8.- Create Realm Role
+	- Go to Realm roles
+	- Create role
+	- Role name: realm-role
+9.- Create Group
+	- Go to Groups
+	- Create group
+	- Name: workspace
+10.- Join Role to group
+	- Go to group "workspace"
+	- Go to Role mapping
+	- Assign role
+	- Filter by realm roles
+	- Select "realm-role"
+11.- Join User to group
+	- Go to group "workspace"
+	- Go to Members
+	- Add member
+	- Select "erick"
+12.- Create Client Role
+	- Go to Client "library.service"
+	- Go to Roles
+	- Create role
+	- Role name: client-role
+13.- Join Role to group
+	- Go to group "workspace"
+	- Go to Role mapping
+	- Assign role
+	- Filter by client
+	- Select "library.service" "client-role"
+
+
+Test Keycloak
+=============
+POST http://localhost:8081/realms/fullstack/protocol/openid-connect/token
+BODY TYPE: x-www-form-urlencoded
+BODY:
+	grant_type:password
+	client_id:library.service
+	username:erick
+	password:password
+	client_secret:<from client>
+
+	grant_type:password
+	client_id:oderservice
+	username:esanchezperu
+	password:password
+	client_secret:<from client>

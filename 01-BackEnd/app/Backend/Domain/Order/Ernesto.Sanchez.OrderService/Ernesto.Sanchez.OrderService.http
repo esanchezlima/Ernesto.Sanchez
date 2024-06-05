@@ -1,0 +1,107 @@
+@Ernesto.Sanchez.OrderService_HostAddress = http://localhost:5019
+
+GET {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders
+Accept: application/json
+
+###
+
+GET {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders/bfa37631-9f3b-4c43-9989-7f1c48682534
+Accept: application/json
+
+###
+
+
+POST  {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders
+Content-Type: application/json
+Accept: application/json
+{
+  "client": "Ernesto Sanchez  ",
+  "adressClient": "La puente Uceda 330",
+  "district": "Substanjalla",
+  "dateofOrder": "2024-05-14T15:33:43.053Z"
+}
+
+
+###
+POST  {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders
+Content-Type: application/json
+Accept: application/json
+{
+  "client": "",
+  "adressClient": "",
+  "district": "Substanjalla",
+  "dateofOrder": "2024-05-14T15:33:43.053Z"
+}
+
+###
+
+PUT {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders/62EFF4C5-C5B5-4880-8551-104D7AAAE24D
+Content-Type: application/json
+Accept: application/json
+{
+  "client": "Ernesto Sanchez 2",
+  "adressClient": "La puente Uceda 330",
+  "district": "Substanjalla",
+  "dateofOrder": "2024-05-14T15:33:43.053Z"
+}
+
+###
+ 
+PUT {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders/3c62202d-32c7-4985-b28f-4fac6c965764
+Content-Type: application/json
+Accept: application/json
+{
+  "client": "Ernesto Sanchez 4",
+  "adressClient": "La puente Uceda 330",
+  "district": "Substanjalla",
+  "dateofOrder": "2024-05-14T15:33:43.053Z"
+}
+
+###
+
+GET {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders/3c62202d-32c7-4985-b28f-4fac6c965764
+Accept: application/json
+
+###
+
+DELETE {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders/3DC2DE35-6F21-4495-9361-54412CF0686E
+Accept: application/json
+
+
+###traer los registros con documentacion 
+
+GET {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders?Fields=Client
+Accept: application/vnd.ernesto.hateoas+json
+
+
+###Ir con el Paginado con documentacion 
+ 
+GET {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders?Fields=Client&pageNumber=2&pageSize=2
+Accept: application/vnd.ernesto.hateoas+json
+
+
+###
+GET {{Ernesto.Sanchez.OrderService_HostAddress}}/api
+Accept: application/json
+
+
+### End Point de Ordenes 
+GET {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders
+Accept: application/json
+
+### End Point de Ordenes con documentacion 
+GET {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders
+Accept: application/vnd.ernesto.hateoas+json
+
+### Items de una Orden
+
+GET {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orders/EAA6FA19-395C-4148-BFB5-E908FCD43E27/items
+Accept: application/json
+
+
+### Coleccion de Ordenes  
+GET {{Ernesto.Sanchez.OrderService_HostAddress}}/api/orderscollection?ordersIds=EAA6FA19-395C-4148-BFB5-E908FCD43E27,BFA37631-9F3B-4C43-9989-7F1C48682534
+Accept: application/json
+
+### 
+POST http://localhost:8081/realms/fullstack/protocol/openid-connect/token
